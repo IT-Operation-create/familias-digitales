@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Familias Digitales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #1c3a2e;
+    --forest-light: #2a5040;
+    --cream: #f4efe6;
+    --warm-white: #faf8f4;
+    --amber: #c4873a;
+    --amber-light: #e8a857;
+    --text-dark: #1a1a18;
+    --text-mid: #4a4a42;
+    --text-light: #7a7a70;
+    --rule: #d8d2c4;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--text-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.25rem 3rem;
+    background: rgba(244, 239, 230, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .nav-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--forest);
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex; gap: 2.5rem; list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-mid);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--forest); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 5rem;
+    background: var(--forest);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -20%; right: -10%;
+    width: 60%; height: 120%;
+    background: radial-gradient(ellipse, rgba(196,135,58,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-text {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 6rem 4rem 6rem 5rem;
+    position: relative; z-index: 2;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 2rem;
+  }
+
+  .hero-headline {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.8rem, 4.5vw, 4.2rem);
+    font-weight: 300;
+    line-height: 1.12;
+    color: var(--cream);
+    letter-spacing: -0.03em;
+    margin-bottom: 2rem;
+  }
+
+  .hero-headline em {
+    font-style: italic;
+    color: var(--amber-light);
+  }
+
+  .hero-body {
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: rgba(244,239,230,0.72);
+    max-width: 480px;
+    line-height: 1.75;
+    margin-bottom: 3rem;
+  }
+
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--cream);
+    text-decoration: none;
+    border-bottom: 1px solid var(--amber);
+    padding-bottom: 0.25rem;
+    transition: color 0.2s, border-color 0.2s;
+    width: fit-content;
+  }
+
+  .hero-cta:hover { color: var(--amber-light); border-color: var(--amber-light); }
+  .hero-cta::after { content: '→'; }
+
+  .hero-visual {
+    display: flex; align-items: center; justify-content: center;
+    padding: 4rem;
+    position: relative;
+  }
+
+  .hero-diagram {
+    position: relative; width: 340px; height: 340px;
+  }
+
+  .diagram-ring {
+    position: absolute; border-radius: 50%;
+    border: 1px solid rgba(196,135,58,0.3);
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+  }
+
+  .ring-1 { width: 340px; height: 340px; animation: rotate 40s linear infinite; }
+  .ring-2 { width: 240px; height: 240px; animation: rotate 30s linear infinite reverse; }
+  .ring-3 { width: 140px; height: 140px; border-color: rgba(196,135,58,0.5); }
+
+  @keyframes rotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  .diagram-dot {
+    position: absolute;
+    width: 8px; height: 8px;
+    background: var(--amber);
+    border-radius: 50%;
+    top: 50%; left: 50%;
+  }
+
+  .diagram-dot:nth-child(4) { transform: translate(-50%, calc(-50% - 170px)); }
+  .diagram-dot:nth-child(5) { transform: translate(calc(-50% + 147px), calc(-50% + 84px)); }
+  .diagram-dot:nth-child(6) { transform: translate(calc(-50% - 147px), calc(-50% + 84px)); }
+
+  .diagram-center {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .diagram-center span {
+    font-family: 'Fraunces', serif;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: rgba(244,239,230,0.5);
+    display: block;
+    line-height: 1.5;
+  }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 7rem 5rem; }
+
+  .section-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    color: var(--forest);
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title em { font-style: italic; }
+
+  .section-body {
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--text-mid);
+    max-width: 600px;
+    line-height: 1.8;
+  }
+
+  hr.rule {
+    border: none; border-top: 1px solid var(--rule);
+    margin: 0;
+  }
+
+  /* ── PREMISA ── */
+  .premisa {
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .premisa-quote {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.45;
+    color: var(--forest);
+    border-left: 3px solid var(--amber);
+    padding-left: 2rem;
+  }
+
+  .premisa-content {}
+
+  .premisa-item {
+    display: flex; gap: 1.25rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .premisa-item:first-child { border-top: 1px solid var(--rule); }
+
+  .premisa-num {
+    font-family: 'Fraunces', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: rgba(196,135,58,0.4);
+    line-height: 1;
+    min-width: 2.5rem;
+    padding-top: 0.1rem;
+  }
+
+  .premisa-item-text strong {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--forest);
+    margin-bottom: 0.3rem;
+  }
+
+  .premisa-item-text p {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--text-mid);
+    line-height: 1.65;
+  }
+
+  /* ── TEMAS ── */
+  .temas { background: var(--warm-white); }
+
+  .temas-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: end;
+    margin-bottom: 4rem;
+  }
+
+  .temas-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+
+  .tema-card {
+    background: var(--warm-white);
+    padding: 2.5rem 2rem;
+    transition: background 0.3s;
+    cursor: default;
+  }
+
+  .tema-card:hover { background: var(--cream); }
+
+  .tema-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+    display: block;
+  }
+
+  .tema-card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--forest);
+    line-height: 1.3;
+    margin-bottom: 0.75rem;
+  }
+
+  .tema-card p {
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: var(--text-mid);
+    line-height: 1.7;
+  }
+
+  .tema-card .tema-tag {
+    display: inline-block;
+    margin-top: 1.25rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+  }
+
+  /* ── PUNTOS CIEGOS ── */
+  .ciegos {
+    background: var(--forest);
+    color: var(--cream);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .ciegos::after {
+    content: '';
+    position: absolute; bottom: -5rem; right: -5rem;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(196,135,58,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .ciegos .section-title { color: var(--cream); }
+
+  .ciegos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-top: 4rem;
+  }
+
+  .ciego-col h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--amber-light);
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(244,239,230,0.15);
+  }
+
+  .ciego-item {
+    display: flex; gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(244,239,230,0.1);
+  }
+
+  .ciego-dot {
+    width: 6px; height: 6px;
+    background: var(--amber);
+    border-radius: 50%;
+    margin-top: 0.55rem;
+    flex-shrink: 0;
+  }
+
+  .ciego-item p {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: rgba(244,239,230,0.75);
+    line-height: 1.65;
+  }
+
+  /* ── CONVERSACIONES ── */
+  .conversaciones { background: var(--cream); }
+
+  .conv-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 3.5rem;
+  }
+
+  .conv-card {
+    background: var(--warm-white);
+    padding: 2rem;
+    border-left: 3px solid transparent;
+    transition: border-color 0.3s;
+  }
+
+  .conv-card:hover { border-color: var(--amber); }
+
+  .conv-card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--forest);
+    margin-bottom: 0.75rem;
+  }
+
+  .conv-card p {
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: var(--text-mid);
+    line-height: 1.7;
+  }
+
+  /* ── COMUNIDAD placeholder ── */
+  .comunidad {
+    background: var(--warm-white);
+    text-align: center;
+  }
+
+  .comunidad-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .placeholder-box {
+    margin-top: 4rem;
+    border: 2px dashed var(--rule);
+    padding: 5rem 3rem;
+    position: relative;
+  }
+
+  .placeholder-label {
+    position: absolute; top: -0.75rem; left: 50%;
+    transform: translateX(-50%);
+    background: var(--warm-white);
+    padding: 0 1rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-light);
+  }
+
+  .placeholder-box h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+  }
+
+  .placeholder-box p {
+    font-size: 0.88rem;
+    color: var(--text-light);
+    font-weight: 300;
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .placeholder-tags {
+    display: flex; flex-wrap: wrap; gap: 0.75rem;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .ptag {
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--text-light);
+    border: 1px solid var(--rule);
+    padding: 0.4rem 1rem;
+    border-radius: 2rem;
+  }
+
+
+
+  /* ── REFERENCIAS ── */
+  .referencias {
+    background: var(--cream);
+    padding: 5rem 5rem;
+  }
+
+  .referencias h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: var(--forest);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .ref-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .ref-list li {
+    display: grid;
+    grid-template-columns: 1.5rem 1fr;
+    gap: 0.75rem;
+    font-size: 0.83rem;
+    font-weight: 300;
+    color: var(--text-mid);
+    line-height: 1.65;
+  }
+
+  .ref-num {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    color: var(--amber);
+    padding-top: 0.05rem;
+  }
+
+  .ref-list a {
+    color: var(--forest);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    word-break: break-all;
+  }
+
+  .ref-list a:hover { color: var(--amber); }
+
+  .ref-link {
+    color: var(--amber);
+    text-decoration: none;
+    font-size: 0.7em;
+    vertical-align: super;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+  }
+
+  .ref-link:hover { text-decoration: underline; }
+
+  @media (max-width: 900px) {
+    .referencias { padding: 4rem 1.5rem; }
+  }
+  footer {
+    background: var(--text-dark);
+    padding: 3rem 5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: rgba(244,239,230,0.5);
+  }
+
+  .footer-note {
+    font-size: 0.78rem;
+    color: rgba(244,239,230,0.3);
+    font-weight: 300;
+  }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .hero-text { padding: 5rem 2rem 4rem; }
+    section { padding: 5rem 1.5rem; }
+    .premisa { grid-template-columns: 1fr; gap: 3rem; }
+    .temas-header { grid-template-columns: 1fr; gap: 1rem; }
+    .temas-grid { grid-template-columns: 1fr; }
+    .ciegos-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .conv-grid { grid-template-columns: 1fr; }
+    .newsletter { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 1.5rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2.5rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Familias Digitales</a>
+  <ul class="nav-links">
+    <li><a href="#premisa">Nuestra perspectiva</a></li>
+    <li><a href="#temas">Temas</a></li>
+    <li><a href="#conversaciones">Guías</a></li>
+    <li><a href="#comunidad">Comunidad</a></li>
+    <li><a href="#referencias">Fuentes</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <p class="hero-eyebrow">Una iniciativa para familias</p>
+    <h1 class="hero-headline">
+      El desafío digital<br>
+      no tiene <em>edad</em>
+    </h1>
+    <p class="hero-body">
+      Padres e hijos navegan el mismo entorno digital sin mapa. Aquí no venimos a controlarlo — venimos a entenderlo juntos.
+    </p>
+    <a class="hero-cta" href="#premisa">Nuestra perspectiva</a>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-diagram">
+      <div class="diagram-ring ring-1"></div>
+      <div class="diagram-ring ring-2"></div>
+      <div class="diagram-ring ring-3"></div>
+      <div class="diagram-dot"></div>
+      <div class="diagram-dot"></div>
+      <div class="diagram-dot"></div>
+      <div class="diagram-center">
+        <span>familia<br>digital</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- PREMISA -->
+<section class="premisa" id="premisa">
+  <div class="premisa-quote fade-up">
+    "Los algoritmos afectan a todas las edades. Pero el cerebro adolescente, aún en desarrollo, es más vulnerable a sus mecanismos de enganche."<sup><a href="#ref-1" class="ref-link">1</a></sup>
+  </div>
+  <div class="premisa-content fade-up">
+    <p class="section-eyebrow">Nuestra perspectiva</p>
+    <div class="premisa-item">
+      <span class="premisa-num">01</span>
+      <div class="premisa-item-text">
+        <strong>El hijo no es el problema</strong>
+        <p>El entorno digital es nuevo para todos. No hay generación con todas las respuestas, ni generación sin vulnerabilidades.</p>
+      </div>
+    </div>
+    <div class="premisa-item">
+      <span class="premisa-num">02</span>
+      <div class="premisa-item-text">
+        <strong>Controlar no es lo mismo que acompañar</strong>
+        <p>Las herramientas de supervisión pueden detectar síntomas. Pero los síntomas solo se entienden en conversación.</p>
+      </div>
+    </div>
+    <div class="premisa-item">
+      <span class="premisa-num">03</span>
+      <div class="premisa-item-text">
+        <strong>La familia como unidad de aprendizaje</strong>
+        <p>Cada generación tiene puntos ciegos que la otra puede — si hay confianza — ayudar a ver.</p>
+      </div>
+    </div>
+    <div class="premisa-item">
+      <span class="premisa-num">04</span>
+      <div class="premisa-item-text">
+        <strong>Las normas negociadas duran más</strong>
+        <p>Los acuerdos digitales que se construyen juntos, con participación real de todos, se cumplen. Los decretos, no.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- TEMAS -->
+<section class="temas" id="temas">
+  <div class="temas-header">
+    <div class="fade-up">
+      <p class="section-eyebrow">Contenidos</p>
+      <h2 class="section-title">De qué hablamos<br><em>aquí</em></h2>
+    </div>
+    <p class="section-body fade-up">
+      No recetas ni listas de reglas. Reflexiones con base en evidencia, escritas para ser discutidas en familia — no aplicadas desde arriba.
+    </p>
+  </div>
+  <div class="temas-grid">
+
+    <div class="tema-card fade-up">
+      <span class="tema-icon">🧠</span>
+      <h3>Atención, distracción y presencia</h3>
+      <p>Los mecanismos de captación de atención funcionan igual en adultos que en niños. ¿Quién en tu familia revisa el teléfono más veces al día?</p>
+      <span class="tema-tag">Bienestar</span>
+    </div>
+
+    <div class="tema-card fade-up">
+      <span class="tema-icon">🔍</span>
+      <h3>Desinformación: el problema de todos</h3>
+      <p>Los adultos y los adolescentes caen en patrones distintos. Conocer los propios es el primer paso — no señalar los ajenos.</p>
+      <span class="tema-tag">Pensamiento crítico</span>
+    </div>
+
+    <div class="tema-card fade-up">
+      <span class="tema-icon">🤝</span>
+      <h3>Acuerdos digitales en familia</h3>
+      <p>Cómo diseñar normas de uso donde todos ceden algo. No contratos, sino conversaciones que generan compromisos reales.</p>
+      <span class="tema-tag">Convivencia</span>
+    </div>
+
+    <div class="tema-card fade-up">
+      <span class="tema-icon">💬</span>
+      <h3>Identidad en entornos digitales</h3>
+      <p>Cómo los adolescentes construyen quiénes son online — y qué huella crean los adultos de sus hijos antes de que puedan decidir.</p>
+      <span class="tema-tag">Identidad</span>
+    </div>
+
+    <div class="tema-card fade-up">
+      <span class="tema-icon">🌙</span>
+      <h3>Sueño, cuerpo y pantallas</h3>
+      <p>La luz azul afecta el sueño a cualquier edad — pero los niños son más sensibles que los adultos por sus pupilas más grandes y lentes oculares más transparentes.<sup><a href="#ref-2" class="ref-link">2</a></sup> Las rutinas de desconexión nocturna funcionan cuando las practica toda la familia.</p>
+      <span class="tema-tag">Salud</span>
+    </div>
+
+    <div class="tema-card fade-up">
+      <span class="tema-icon">🎮</span>
+      <h3>Gaming: lo que dice la evidencia</h3>
+      <p>La diferencia entre uso intensivo y trastorno real.<sup><a href="#ref-3" class="ref-link">3</a></sup> Cuándo el gaming es socialización legítima y cuándo es señal de algo más.</p>
+      <span class="tema-tag">Ocio digital</span>
+    </div>
+
+    <div class="tema-card fade-up">
+      <span class="tema-icon">🔒</span>
+      <h3>Privacidad como valor, no como filtro</h3>
+      <p>Enseñar criterio sobre qué se comparte, con quién y por qué — a cualquier edad. La privacidad digital como práctica familiar.</p>
+      <span class="tema-tag">Seguridad</span>
+    </div>
+
+    <div class="tema-card fade-up">
+      <span class="tema-icon">❤️</span>
+      <h3>Salud mental y entornos digitales</h3>
+      <p>Qué dice la investigación actual sobre redes sociales, comparación y ansiedad. Señales de alerta que se leen sin herramientas tecnológicas.</p>
+      <span class="tema-tag">Salud mental</span>
+    </div>
+
+    <div class="tema-card fade-up">
+      <span class="tema-icon">🌱</span>
+      <h3>Autonomía digital gradual</h3>
+      <p>Cómo ceder responsabilidad digital conforme crece el hijo — con criterios por etapa, no con un corte abrupto a los 18.</p>
+      <span class="tema-tag">Desarrollo</span>
+    </div>
+
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- PUNTOS CIEGOS -->
+<section class="ciegos" id="ciegos">
+  <p class="section-eyebrow">Perspectiva intergeneracional</p>
+  <h2 class="section-title">Lo que cada generación<br><em>no ve de sí misma</em></h2>
+  <div class="ciegos-grid">
+    <div class="ciego-col fade-up">
+      <h3>Los adultos tienden a...</h3>
+      <div class="ciego-item"><div class="ciego-dot"></div><p>Subestimar su propio consumo compulsivo de pantalla — el teléfono en la mesa durante la cena, el scroll antes de dormir.</p></div>
+      <div class="ciego-item"><div class="ciego-dot"></div><p>Confundir fluencia técnica con criterio digital. Saber usar una herramienta no significa entender cómo te usa a ti.</p></div>
+      <div class="ciego-item"><div class="ciego-dot"></div><p>Crear huella digital de sus hijos — fotos, ubicaciones, anécdotas — antes de que puedan consentirlo. El llamado <em>sharenting</em>.<sup><a href="#ref-4" class="ref-link">4</a></sup></p></div>
+      <div class="ciego-item"><div class="ciego-dot"></div><p>Interpretar el mundo digital del adolescente desde categorías que no aplican — riesgo constante, dependencia, superficialidad.</p></div>
+    </div>
+    <div class="ciego-col fade-up">
+      <h3>Los adolescentes tienden a...</h3>
+      <div class="ciego-item"><div class="ciego-dot"></div><p>Tener más fluidez técnica pero menor perspectiva sobre consecuencias a largo plazo de lo que se publica o comparte.</p></div>
+      <div class="ciego-item"><div class="ciego-dot"></div><p>Sobrestimar su resistencia a la manipulación algorítmica — precisamente porque la arquitectura está diseñada para no ser visible.</p></div>
+      <div class="ciego-item"><div class="ciego-dot"></div><p>Medir su valor a través de métricas de validación social — likes, seguidores, respuestas — sin cuestionar de dónde viene esa lógica.<sup><a href="#ref-5" class="ref-link">5</a></sup></p></div>
+      <div class="ciego-item"><div class="ciego-dot"></div><p>Asumir que los adultos no entienden nada, lo que cierra conversaciones que podrían ser útiles para ambos.</p></div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- CONVERSACIONES -->
+<section class="conversaciones" id="conversaciones">
+  <p class="section-eyebrow">Guías prácticas</p>
+  <h2 class="section-title">Conversaciones<br><em>difíciles</em></h2>
+  <p class="section-body">
+    No scripts de urgencia. Guías para conversaciones que valen la pena tener antes de que haya una crisis — con honestidad y sin pánico.
+  </p>
+  <div class="conv-grid fade-up">
+    <div class="conv-card">
+      <h3>Cómo hablar de pornografía sin generar vergüenza</h3>
+      <p>Cuándo, cómo y desde dónde abrir una conversación que la mayoría de familias evita — con consecuencias reales.</p>
+    </div>
+    <div class="conv-card">
+      <h3>Cuando el acoso ocurre en el teléfono</h3>
+      <p>Cómo reconocer el ciberbullying, cómo responder sin escalar, y cómo mantener el canal abierto con el hijo afectado.</p>
+    </div>
+    <div class="conv-card">
+      <h3>Negociar el teléfono sin que sea una batalla</h3>
+      <p>Marco práctico para diseñar acuerdos de uso donde el proceso de negociación importa tanto como el resultado.</p>
+    </div>
+    <div class="conv-card">
+      <h3>Cuando el hijo ve algo que no debería</h3>
+      <p>Cómo reaccionar ante contenido violento, extremista o perturbador que el hijo encontró — sin castigar la conversación.</p>
+    </div>
+    <div class="conv-card">
+      <h3>Privacidad y transparencia en familia</h3>
+      <p>Cómo hablar del monitoreo parental con honestidad, y qué pasa cuando los hijos sienten que se invade su privacidad.</p>
+    </div>
+    <div class="conv-card">
+      <h3>El modelo que los padres dan sin querer</h3>
+      <p>Una guía para que los adultos hagan el diagnóstico honesto de su propio uso digital — antes de exigírselo a sus hijos.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- COMUNIDAD PLACEHOLDER -->
+<section class="comunidad" id="comunidad">
+  <div class="comunidad-inner fade-up">
+    <p class="section-eyebrow">Comunidad y talleres</p>
+    <h2 class="section-title">Aprender <em>juntos</em></h2>
+    <p class="section-body" style="margin: 0 auto;">
+      Esta iniciativa no es solo contenido para leer en solitario. Parte de su sentido está en el encuentro — familias con otras familias, con facilitadores, con espacio para la duda real.
+    </p>
+
+    <div class="placeholder-box">
+      <span class="placeholder-label">En desarrollo</span>
+      <h3>Estructura de comunidad y talleres</h3>
+      <p>
+        Este espacio definirá los formatos de encuentro: talleres presenciales o en línea, grupos de reflexión por etapa de vida familiar, recursos para facilitadores, y los criterios de participación.
+      </p>
+      <div class="placeholder-tags">
+        <span class="ptag">Talleres familiares</span>
+        <span class="ptag">Grupos de reflexión</span>
+        <span class="ptag">Formación de facilitadores</span>
+        <span class="ptag">Recursos descargables</span>
+        <span class="ptag">Comunidad online</span>
+        <span class="ptag">Encuentros presenciales</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- REFERENCIAS -->
+<section class="referencias" id="referencias">
+  <h2>Fuentes y evidencia</h2>
+  <ul class="ref-list">
+    <li>
+      <span class="ref-num" id="ref-1">1</span>
+      <span>Knight-Georgetown Institute (2025). <em>Fixing the Feeds: A Policy Roadmap for Algorithms That Put People First.</em> Los adolescentes son más vulnerables que los adultos a los riesgos asociados con los medios curados algorítmicamente. &rarr; <a href="https://kgi.georgetown.edu/research-and-commentary/fixing-the-feeds-a-policy-roadmap-for-algorithms-that-put-people-first/" target="_blank" rel="noopener">kgi.georgetown.edu</a></span>
+    </li>
+    <li>
+      <span class="ref-num" id="ref-2">2</span>
+      <span>LeBourgeois, M.K. et al. (2017). <em>Digital Media and Sleep in Childhood and Adolescence.</em> Pediatrics. Los niños tienen pupilas más grandes y lentes más transparentes; cuando adultos y niños se exponen a la misma intensidad de luz, los niveles de melatonina de los niños caen el doble. &rarr; <a href="https://www.colorado.edu/today/2017/11/01/kids-uniquely-vulnerable-sleep-disruption-electronics" target="_blank" rel="noopener">colorado.edu</a></span>
+    </li>
+    <li>
+      <span class="ref-num" id="ref-3">3</span>
+      <span>Organización Mundial de la Salud / ICD-11 (2022). <em>Gaming Disorder.</em> El trastorno por videojuegos requiere control deteriorado, prioridad creciente sobre otras actividades, y continuación a pesar de consecuencias negativas — durante al menos 12 meses. Es distinto del uso intensivo sin deterioro funcional. &rarr; <a href="https://www.who.int/news-room/questions-and-answers/item/addictive-behaviours-gaming-disorder" target="_blank" rel="noopener">who.int</a></span>
+    </li>
+    <li>
+      <span class="ref-num" id="ref-4">4</span>
+      <span>Steinberg, S.B. (2017). <em>Sharenting: Children's Privacy in the Age of Social Media.</em> Emory Law Journal, 66(4). Los padres dan forma a la identidad digital de sus hijos mucho antes de que puedan consentirlo. &rarr; <a href="https://scholarlycommons.law.emory.edu/elj/vol66/iss4/2/" target="_blank" rel="noopener">scholarlycommons.law.emory.edu</a> &nbsp;|&nbsp; Tosuntaş et al. (2024). Revisión sistemática del fenómeno sharenting (61 estudios). &rarr; <a href="https://onlinelibrary.wiley.com/doi/10.1111/jftr.12566" target="_blank" rel="noopener">Wiley</a></span>
+    </li>
+    <li>
+      <span class="ref-num" id="ref-5">5</span>
+      <span>Journal of Adolescent Health (2024). <em>Associations Between Social Media Use and Anxiety Among Adolescents: A Systematic Review.</em> La evidencia muestra asociaciones mixtas pero consistentes entre uso de redes sociales, comparación social y síntomas de ansiedad en adolescentes. &rarr; <a href="https://www.jahonline.org/article/S1054-139X(24)00433-6/abstract" target="_blank" rel="noopener">jahonline.org</a> &nbsp;|&nbsp; Einstein et al. (2023). El FOMO modera la relación entre uso de redes sociales y ansiedad en adolescentes. &rarr; <a href="https://doaj.org/article/d31a8389da5344c9895d15b2944214c8" target="_blank" rel="noopener">DOAJ / Australian Journal of Psychology</a></span>
+    </li>
+  </ul>
+</section>
+
+<hr class="rule">
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Familias Digitales</span>
+  <span class="footer-note">[Nombre de la iniciativa — placeholder] · 2025</span>
+</footer>
+
+<script>
+  // Scroll fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
